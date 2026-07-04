@@ -5,8 +5,10 @@ import net.engineeringdigest.JournalApp.entity.User;
 import net.engineeringdigest.JournalApp.repository.UserRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +20,18 @@ public class UserService {
     private UserRepository userRepository;  // we are inject this  JournalEntryRepository in JournalEntryServices class.
      // here what actually happen userServices called userRepository
 
-    public void saveEntry(User user){  // we want to save this.
+    @Autowired
+    private PasswordEncoder passwordencoder;
+    // private static final PasswordEncoder passwordencoder = new BCryptPasswordEncoder();
+
+    public void saveNewEntry(User user){  // we want to save this.
+        user.setPassword(passwordencoder.encode(user.getPassword()));  // here we encode password and then setPassword
+        user.setRoles(Arrays.asList("USER"));
+        userRepository.save(user);
+    }
+
+   public void saveUser(User user){  // we want to save this.
+
         userRepository.save(user);
     }
 

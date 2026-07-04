@@ -22,11 +22,11 @@ public class JournalEntryService {
 
 
     @Autowired
-    private UserService  userService;
+    private UserService userService;
 
 
     @Transactional
-    public void saveEntry(JournalEntry journalEntry, String username){ // we want to save this.
+    public void saveEntry(JournalEntry journalEntry, String username) { // we want to save this.
         User user = userService.findByUserName(username);
         // now saving  Date in journalEntry
         journalEntry.setDate(LocalDateTime.now());
@@ -35,27 +35,43 @@ public class JournalEntryService {
         // we have find user already now our main goal to adding this entry into user journalEntries
         user.getJournalEntries().add(saved);
         // now user is in memory so have to call userServices again saving this user into database
-        userService.saveEntry(user);
+        userService.saveUser(user);
     }
 
-    public void saveEntry(JournalEntry journalEntry){ // we want to save this.
+    public void saveEntry(JournalEntry journalEntry) { // we want to save this.
         JournalEntryRepository.save(journalEntry);     // this saveEntry method is for connection between users and JournalEntry
     }
 
-    public List<JournalEntry>getAll(){
+    public List<JournalEntry> getAll() {
         return JournalEntryRepository.findAll();
     }
 
-    public Optional<JournalEntry> findById(ObjectId id){
+    public Optional<JournalEntry> findById(ObjectId id) {
         return JournalEntryRepository.findById(id);
     }
 
-    public void deleteById(ObjectId id,String username){
-        User user  = userService.findByUserName(username);
-        user.getJournalEntries().removeIf(entry -> entry.getId().equals(id));
-        userService.saveEntry(user);
-        JournalEntryRepository.deleteById(id);
+    @Transactional
+    public boolean deleteById(ObjectId id, String username) {
+        boolean removed = false;
+        try {
+            User user = userService.findByUserName(username);
+            removed = user.getJournalEntries().removeIf(x -> x.getId().equals(id));
+            if (removed) {
+                userService.saveUser(user);
+                JournalEntryRepository.deleteById(id);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            throw new RuntimeException("an error occured while deleting the entry", e);
+        }
+        return removed;
     }
 }
+
+
+
+
+
+
 // controller call to service and service call to repository
 // so i got error on JournalEntry so i just clicked on JournalEntry and click on import class.

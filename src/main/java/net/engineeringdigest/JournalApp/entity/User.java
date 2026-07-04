@@ -41,7 +41,7 @@ public class User {  // in this User intity we are giving login functionality  e
     // means this jounalentries List will store refernce of entries which is created in this jounalentries.
     private List<JournalEntry> journalEntries = new ArrayList<>(); // here will be the list of jounalentries
     // beacuse whenever a user initialize in that jounalentries will be atleast a empty list and not null.
-
+    private List<String> roles;   // add this for security class, to mentioned the roles of users.
 }
 /*     private List<JournalEntry> journalEntries = new ArrayList<>(); this line  always gives us a empty
 journalEntries in every username entry like "sakshi"
