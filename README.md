@@ -1,5 +1,6 @@
 This repository is based on my Secure Journal Management project and focuses on demonstrating JUnit 5 and Mockito testing.
-### Code Quality Analysis
+
+## Code Quality Analysis
 
 - Integrated SonarQube with Maven.
 - Performed static code analysis on the Spring Boot project.
