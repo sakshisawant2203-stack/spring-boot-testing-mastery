@@ -4,6 +4,8 @@ package net.engineeringdigest.JournalApp.service;
 import net.engineeringdigest.JournalApp.entity.User;
 import net.engineeringdigest.JournalApp.repository.UserRepository;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -24,10 +26,26 @@ public class UserService {
     private PasswordEncoder passwordencoder;
     // private static final PasswordEncoder passwordencoder = new BCryptPasswordEncoder();
 
-    public void saveNewEntry(User user){  // we want to save this.
-        user.setPassword(passwordencoder.encode(user.getPassword()));  // here we encode password and then setPassword
-        user.setRoles(Arrays.asList("USER"));
-        userRepository.save(user);
+
+
+    private final Logger logger = LoggerFactory.getLogger(JournalEntryService.class);
+    // each logger has its diff instant so make it private,to protect from accidental reassignment make it final,to JournalEntryService instant make 1 in
+// LoggerFactory is utility class,to get a instance of logger we use getLogger & logger associated with any class so JournalEntryService.class
+
+    public boolean saveNewEntry(User user) {  // we want to save this.
+        try {
+            user.setPassword(passwordencoder.encode(user.getPassword()));  // here we encode password and then setPassword
+            user.setRoles(Arrays.asList("USER"));
+            userRepository.save(user);
+            return true;
+        } catch (Exception e) {
+            logger.info("hahahaaaa");
+            logger.error("hahahaaaa");
+            logger.warn("hahahaaaa");
+            logger.debug("hahahaaaa");
+            logger.trace("hahahaaaa");
+            return false;
+        }
     }
 
    public void saveUser(User user){  // we want to save this.

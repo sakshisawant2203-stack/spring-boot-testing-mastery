@@ -1,3 +1,4 @@
+
 package net.engineeringdigest.JournalApp.repository;
 
 import net.engineeringdigest.JournalApp.entity.JournalEntry;
@@ -13,3 +14,4 @@ public interface JournalEntryRepository extends MongoRepository<JournalEntry,Obj
 /*
 u are not writing any implementation code inside this Repository so u are not writing repository logic manually spring generates it at runtime
  */
+

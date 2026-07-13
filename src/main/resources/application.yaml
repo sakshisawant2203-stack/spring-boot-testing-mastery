@@ -1,0 +1,15 @@
+spring:
+  data:
+    mongodb:
+    uri: mongodb+srv://sakshisawant2203_db_user:RZf6yOFvC6PqeiAb@cluster0.kcybrle.mongodb.net/?appName=Cluster0
+    database: test
+    auto-index-creation: true
+
+server:
+  port: 8082
+  servlet:
+    context-path: /Journal
+
+
+
+

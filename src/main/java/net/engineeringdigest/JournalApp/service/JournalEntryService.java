@@ -1,3 +1,4 @@
+
 // now here we going to write our business logic,and will use JournalEntryService in controller package.
 package net.engineeringdigest.JournalApp.service;
 
@@ -5,6 +6,8 @@ import net.engineeringdigest.JournalApp.entity.JournalEntry;
 import net.engineeringdigest.JournalApp.entity.User;
 import net.engineeringdigest.JournalApp.repository.JournalEntryRepository;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,17 +64,12 @@ public class JournalEntryService {
                 JournalEntryRepository.deleteById(id);
             }
         } catch (Exception e) {
-            System.out.println(e);
+
             throw new RuntimeException("an error occured while deleting the entry", e);
         }
         return removed;
     }
 }
-
-
-
-
-
-
 // controller call to service and service call to repository
 // so i got error on JournalEntry so i just clicked on JournalEntry and click on import class.
+
